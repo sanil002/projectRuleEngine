@@ -1,0 +1,15 @@
+OkHttpClient client = new OkHttpClient();
+
+MediaType mediaType = MediaType.parse("application/xml");
+RequestBody body = RequestBody.create(mediaType, "<batch-execution lookup=\"mySession\">\r\n  <insert out-identifier=\"customer\">\r\n    <project.myproject.Customer>\r\n      <years>15</years>\r\n      <type>INDIVIDUAL</type>\r\n    </project.myproject.Customer>\r\n  </insert>\r\n  <fire-all-rules/>\r\n  <get-objects out-identifier=\"customer\"/>\r\n</batch-execution>");
+Request request = new Request.Builder()
+  .url("http://localhost:9093/kie-server/services/rest/server/containers/instances/discount2")
+  .post(body)
+  .addHeader("authorization", "Basic YWRtaW46YWRtaW4=")
+  .addHeader("x-kie-contenttype", "XSTREAM")
+  .addHeader("content-type", "application/xml")
+  .addHeader("cache-control", "no-cache")
+  .addHeader("postman-token", "56b4cd7c-49af-8815-3c0d-aac67e8e912a")
+  .build();
+
+Response response = client.newCall(request).execute();
